@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "f1-p10-game"
+name = "f1p10game"
 version = "0.1.0"
 description = ""
 authors = ["Kamil Democko <kamil.democko@gmail.com>"]
