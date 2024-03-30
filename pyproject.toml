@@ -1,16 +1,15 @@
 [tool.poetry]
 name = "f1p10game"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Kamil Democko <kamil.democko@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-htmx = "^0.0.0"
-lxml = "^5.1.0"
 nicegui = "^1.4.17"
-msgspec = "^0.18.6"
+pydantic = "^2.6.4"
+arrow = "^1.3.0"
 
 
 [build-system]

@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import arrow
 from nicegui import ui
 
 import circuit as ci
@@ -37,10 +38,9 @@ class Main:
             ui.link(text="GitHub", target="https://github.com/kamildemocko")
 
     def update_players(self, players: pl.PlayersStruct, values: dict[str, pl.PlayerChoice]):
-        data = players.data
-
-        for key, value in values.items():
-            data[key].choices = values[key]
+        for name, choices in values.items():
+            circuit_name = values[name].circuit
+            players.data[name].choices[circuit_name] = values[name]
 
         self.players_handle.save_players(players)
 
@@ -61,7 +61,12 @@ class Main:
                 values = {}
 
                 for key, value in player_choices.items():
-                    values[key] = pl.PlayerChoice(circuit=circuit.title, pten=value[0].value, dnf=value[1].value)
+                    values[key] = pl.PlayerChoice(
+                        circuit=circuit.title,
+                        pten=value[0].value,
+                        dnf=value[1].value,
+                        timestamp=arrow.utcnow().isoformat(),
+                    )
 
                 return values
 

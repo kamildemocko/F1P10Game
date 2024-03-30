@@ -1,0 +1,30 @@
+{
+    "data": {
+        "Kamil": {
+            "name": "Kamil",
+            "points": 0,
+            "choices": {
+                "UNITED STATES": {
+                    "circuit": "UNITED STATES",
+                    "pten": "",
+                    "dnf": "",
+                    "timestamp": "2024-03-30T09:02:09.588056+00:00"
+                }
+            },
+            "timestamp": "2024-03-30T09:02:05.901849+00:00"
+        },
+        "Katka": {
+            "name": "Katka",
+            "points": 0,
+            "choices": {
+                "UNITED STATES": {
+                    "circuit": "UNITED STATES",
+                    "pten": "",
+                    "dnf": "",
+                    "timestamp": "2024-03-30T09:02:09.588172+00:00"
+                }
+            },
+            "timestamp": "2024-03-30T09:02:05.901870+00:00"
+        }
+    }
+}

@@ -1,27 +1,27 @@
 from pathlib import Path
 
-import msgspec
+from pydantic import BaseModel
 
 
-class CircuitWeekendStructure(msgspec.Struct):
+class CircuitWeekendStructure(BaseModel):
     name: str
     day: str
     month: str
     time: str
 
 
-class Circuit(msgspec.Struct):
+class Circuit(BaseModel):
     title: str
     date_span: str
     weekend_structure: list[CircuitWeekendStructure]
 
 
-class Circuits(msgspec.Struct):
+class Circuits(BaseModel):
     data: list[Circuit]
 
 
 def get_circuits(file_path: Path) -> Circuits:
     with file_path.open("rb") as file:
-        data = msgspec.json.decode(file.read(), type=Circuits)
+        data = Circuits.model_validate_json(file.read())
 
     return data

@@ -1,26 +1,25 @@
-from typing import Any
 from pathlib import Path
-from dataclasses import dataclass
 
-import msgspec
-
-
-@dataclass
-class Player:
-    name: str
-    points: int
-    choices: dict[str, Any]
+import arrow
+from pydantic import BaseModel, ConfigDict
 
 
-class PlayersStruct(msgspec.Struct):
-    data: dict[str, Player]
-
-
-@dataclass
-class PlayerChoice:
+class PlayerChoice(BaseModel):
     circuit: str
     pten: str
     dnf: str
+    timestamp: str
+
+
+class Player(BaseModel):
+    name: str
+    points: int
+    choices: dict[str, PlayerChoice]
+    timestamp: str
+
+
+class PlayersStruct(BaseModel):
+    data: dict[str, Player]
 
 
 class Players:
@@ -29,19 +28,19 @@ class Players:
 
     def get_players(self) -> PlayersStruct:
         if not self.path.exists():
-            return PlayersStruct([])
+            return PlayersStruct(data={})
 
         with self.path.open("rb") as file:
             binary = file.read()
 
         if len(binary) == 0:
-            return PlayersStruct([])
+            return PlayersStruct(data={})
 
-        return msgspec.json.decode(binary, type=PlayersStruct)
+        return PlayersStruct.model_validate_json(binary)
 
     def save_players(self, data: PlayersStruct):
-        with self.path.open("wb") as file:
-            file.write(msgspec.json.encode(data))
+        with self.path.open("w") as file:
+            file.write(data.model_dump_json(indent=4))
 
     @staticmethod
     def get_initial_players_obj(names: list[str]) -> PlayersStruct:
@@ -51,6 +50,7 @@ class Players:
                 name=name,
                 points=0,
                 choices={},
+                timestamp=arrow.utcnow().isoformat(),
             )
 
         return PlayersStruct(data=ret)
