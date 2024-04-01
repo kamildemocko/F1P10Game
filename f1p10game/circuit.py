@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class CircuitWeekendStructure(BaseModel):
@@ -17,11 +17,14 @@ class Circuit(BaseModel):
 
 
 class Circuits(BaseModel):
-    data: list[Circuit]
+    all: list[Circuit] = Field(alias="data")
 
 
-def get_circuits(file_path: Path) -> Circuits:
-    with file_path.open("rb") as file:
-        data = Circuits.model_validate_json(file.read())
+class CircuitApp:
+    def __init__(self, path: Path):
+        self.path = path
+        self.data = self._parse_data()
 
-    return data
+    def _parse_data(self) -> Circuits:
+        with self.path.open("rb") as file:
+            return Circuits.model_validate_json(file.read())

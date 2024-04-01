@@ -6,8 +6,8 @@ from pydantic import BaseModel, ConfigDict
 
 class PlayerChoice(BaseModel):
     circuit: str
-    pten: str
-    dnf: str
+    pten: int
+    dnf: int
     timestamp: str
 
 
@@ -22,7 +22,7 @@ class PlayersStruct(BaseModel):
     data: dict[str, Player]
 
 
-class Players:
+class PlayersApp:
     def __init__(self, path: Path):
         self.path: Path = path
 
