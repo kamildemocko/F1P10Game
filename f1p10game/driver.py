@@ -32,7 +32,7 @@ class DriverApp:
         with self.path.open("rb") as file:
             return Drivers.model_validate_json(file.read())
 
-    def get_driver_names_as_dict_kshort_vshortname(self) -> dict[int, str]:
+    def get_driver_names_for_dropdown(self) -> dict[int, str]:
         data = {driver.number: f"{driver.number}: {driver.name.title()}" for driver in self.data.all}
 
         data = dict(sorted(data.items()))

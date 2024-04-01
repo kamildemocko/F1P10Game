@@ -1,6 +1,6 @@
 from nicegui import ui
 
-from players import PlayersStruct
+from ..players import PlayersStruct
 
 
 def init_ui_settings(title: str):

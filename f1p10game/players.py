@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import arrow
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel
 
 
 class PlayerChoice(BaseModel):

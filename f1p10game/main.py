@@ -1,4 +1,4 @@
-from typing import Any, Callable
+from typing import Any
 from pathlib import Path
 from dataclasses import dataclass
 from functools import partial
@@ -6,13 +6,11 @@ from functools import partial
 import arrow
 import nicegui.ui
 from nicegui import ui
-from pydantic import BaseModel
 
-import ui_methods
-import ui_updaters
 from circuit import CircuitApp, Circuit, Circuits
 from driver import DriverApp
 from players import PlayersApp, PlayersStruct, PlayerChoice, Player
+from uis import ui_builder
 
 
 @dataclass
@@ -80,7 +78,7 @@ class Main:
         Create one circuit data expansion
         """
         with ui.expansion(circuit.title, caption=circuit.date_span, icon="keyboard_double_arrow_right") as exp:
-            driver_options = self.drivers_handle.get_driver_names_as_dict_kshort_vshortname()
+            driver_options = self.drivers_handle.get_driver_names_for_dropdown()
             filled_choices_persons: list[str] = []
 
             # each player has his own row with dropdowns to choose from
@@ -198,18 +196,21 @@ class Main:
     def run(self):
         players: PlayersStruct = self.players_handle.get_players()
         if len(players.data) == 0:
-            players = self.players_handle.get_initial_players_obj(self.initial_players)
-
-        ui_methods.init_ui_settings(self.title)
-        ui_methods.init_header(players)
-        ui_methods.init_footer()
+            players: PlayersStruct = self.players_handle.get_initial_players_obj(self.initial_players)
 
         # CIRCUITS
         circuits: Circuits = self.circuit_handle.data
 
-        with ui.row():
-            for circuit in circuits.all:
-                self.add_circuit_data(circuit, players)
+        # with ui.row():
+        #     for circuit in circuits.all:
+        #         self.add_circuit_data(circuit, players)
+
+        ui_builder_handle = ui_builder.UiBuilder(title=self.title, players=players)
+        ui_builder_handle.build_all_circuits(
+            players=players,
+            circuits=circuits,
+            driver_options=self.drivers_handle.get_driver_names_for_dropdown(),
+        )
 
         ui.run()
 
