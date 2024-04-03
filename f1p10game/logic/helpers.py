@@ -5,7 +5,7 @@ from nicegui import ui
 import arrow
 
 from f1p10game.uis import types as ui_types
-from f1p10game.players import PlayersStruct, PlayerChoice
+from f1p10game.players import PlayersStruct
 
 
 def humanize_timestamp(timestamp: str | None = None) -> str:

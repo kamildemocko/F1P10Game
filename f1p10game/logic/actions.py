@@ -9,8 +9,12 @@ class Actions:
     def __init__(self, players_handle: PlayersApp):
         self.players_handle = players_handle
 
-    def on_edit_button_clicked(self):
-        pass
+    @staticmethod
+    def on_edit_button_clicked(player_form: ui_types.CircuitFormPlayer) -> None:
+        player_form.pten.enable()
+        player_form.dnf.enable()
+        player_form.buttons.confirm.enable()
+        player_form.buttons.edit.disable()
 
     def on_confirm_button_clicked(
             self,

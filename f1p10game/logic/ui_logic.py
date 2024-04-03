@@ -1,6 +1,5 @@
 from typing import Callable
 
-from icecream import ic
 import arrow
 from nicegui import ui
 
@@ -32,22 +31,24 @@ class UiLogic:
         player_form.label.text = player_name
 
         player_choice_for_circuit = player_choices.get(circuit_name, None)
+
+        player_form.buttons.edit.on("click", lambda x=player_form: on_edit(x))
+        player_form.buttons.confirm.on(
+            "click", lambda x=player_form, n=player_name, c=circuit_name: on_confirm(
+                picked_values=self.get_players_picked_choices(x.pten, x.dnf, n, c))
+        )
+
         if player_choice_for_circuit is None:
             player_form.buttons.edit.disable()
-            player_form.buttons.confirm.on(
-                "click", lambda x=player_form, n=player_name, c=circuit_name: on_confirm(
-                    picked_values=self.get_players_picked_choices(x.pten, x.dnf, n, c))
-            )
             return False
 
         player_form.pten.value = player_choice_for_circuit.pten
         player_form.dnf.value = player_choice_for_circuit.dnf
+        player_form.buttons.timestamp.text = helpers.humanize_timestamp(player_choice_for_circuit.timestamp)
+
         player_form.pten.disable()
         player_form.dnf.disable()
-
-        player_form.buttons.timestamp.text = helpers.humanize_timestamp(player_choice_for_circuit.timestamp)
         player_form.buttons.confirm.disable()
-        player_form.buttons.edit.on("click", on_edit)
 
         return True
 
@@ -69,7 +70,7 @@ class UiLogic:
                         players,
                         one_circuit_elements.players.players[player_name],
                     ),
-                    sum,  # TODO
+                    self.actions_handle.on_edit_button_clicked
                 )
                 if not players_form_filled:
                     continue
