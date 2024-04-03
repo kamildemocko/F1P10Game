@@ -11,6 +11,7 @@ from circuit import CircuitApp, Circuit, Circuits
 from driver import DriverApp
 from players import PlayersApp, PlayersStruct, PlayerChoice, Player
 from uis import ui_builder
+from logic.ui_logic import UiLogic
 
 
 @dataclass
@@ -24,6 +25,9 @@ class Main:
     def __init__(self):
         self.title = "Formula 1 P-10 Game"
 
+        self.drivers_path = Path("./data/drivers.json")
+        self.drivers_handle = DriverApp(self.drivers_path)
+
         self.circuits_path: Path = Path("./data/circuits.json")
         self.circuit_handle = CircuitApp(self.circuits_path)
 
@@ -31,8 +35,7 @@ class Main:
         self.players_path = Path("./data/players.json")
         self.players_handle = PlayersApp(self.players_path)
 
-        self.drivers_path = Path("./data/drivers.json")
-        self.drivers_handle = DriverApp(self.drivers_path)
+        self.logic_handle = UiLogic(self.players_handle)
 
     def update_players(self, players: PlayersStruct, values: dict[str, PlayerChoice]):
         """
@@ -195,22 +198,17 @@ class Main:
 
     def run(self):
         players: PlayersStruct = self.players_handle.get_players()
-        if len(players.data) == 0:
-            players: PlayersStruct = self.players_handle.get_initial_players_obj(self.initial_players)
 
-        # CIRCUITS
         circuits: Circuits = self.circuit_handle.data
 
-        # with ui.row():
-        #     for circuit in circuits.all:
-        #         self.add_circuit_data(circuit, players)
-
         ui_builder_handle = ui_builder.UiBuilder(title=self.title, players=players)
-        ui_builder_handle.build_all_circuits(
+        ui_elements = ui_builder_handle.build_all_circuits(
             players=players,
             circuits=circuits,
             driver_options=self.drivers_handle.get_driver_names_for_dropdown(),
         )
+
+        self.logic_handle.update_ui_data(all_circuits_elements=ui_elements, players=players)
 
         ui.run()
 

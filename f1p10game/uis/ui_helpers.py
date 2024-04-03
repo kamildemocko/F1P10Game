@@ -9,14 +9,30 @@ def init_ui_settings(title: str):
     ui.separator()
 
 
-def init_header(players: PlayersStruct):
+def init_header(players: PlayersStruct) -> ui.html:
     p = players.data.values()
     sorted(p, key=lambda x: x.points)
 
+    labels = []
     with ui.header() as header:
         header.style("background-color: crimson; color: white;")
         for index, player in enumerate(p, start=1):
-            ui.label(text=f"P{index}: {player.name} - {player.points} points")
+            labels.append(f"{index}: {player.name} - {player.points} points")
+
+        label = ui.html(content="&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;".join(labels))
+
+    return label
+
+
+def update_header(header_element: ui.html, players: PlayersStruct):
+    p = players.data.values()
+    sorted(p, key=lambda x: x.points)
+
+    labels = []
+    for index, player in enumerate(p, start=1):
+        labels.append(f"{index}: {player.name} - {player.points} points")
+
+    header_element.content = "&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;".join(labels)
 
 
 def init_footer():

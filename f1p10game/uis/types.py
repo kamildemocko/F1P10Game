@@ -11,7 +11,7 @@ class CircuitFormButtons:
 
 
 @dataclass
-class CircuitFormWeekendTable():
+class CircuitFormWeekendTable:
     table: ui.aggrid
 
 
@@ -20,6 +20,7 @@ class CircuitFormPlayer:
     label: ui.label
     pten: ui.select
     dnf: ui.select
+    buttons: CircuitFormButtons
 
 
 @dataclass()
@@ -30,10 +31,9 @@ class CircuitFormPlayers:
 @dataclass
 class CircuitFormStructure:
     players: CircuitFormPlayers
-    buttons: CircuitFormButtons
     table: CircuitFormWeekendTable
 
 
 @dataclass
 class CircuitsFormStructure:
-    circuits: list[CircuitFormStructure]
+    circuits: dict[str, CircuitFormStructure]

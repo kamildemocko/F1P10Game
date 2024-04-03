@@ -1,6 +1,6 @@
 from nicegui import ui
 
-from f1p10game.uis import ui_initializers
+from f1p10game.uis import ui_helpers
 from f1p10game.uis.types import (
     CircuitFormButtons,
     CircuitFormWeekendTable,
@@ -15,9 +15,9 @@ from f1p10game.circuit import Circuit, Circuits
 
 class UiBuilder:
     def __init__(self, title: str, players: PlayersStruct):
-        ui_initializers.init_ui_settings(title)
-        ui_initializers.init_header(players)
-        ui_initializers.init_footer()
+        ui_helpers.init_ui_settings(title)
+        self.header = ui_helpers.init_header(players)
+        ui_helpers.init_footer()
 
     @staticmethod
     def _build_track_weekend_table(circuit: Circuit) -> CircuitFormWeekendTable:
@@ -39,7 +39,7 @@ class UiBuilder:
         }).classes("max-h-48")
 
     @staticmethod
-    def _build_form_buttons(expansion: ui.expansion) -> CircuitFormButtons:
+    def _build_form_buttons() -> CircuitFormButtons:
         """
         Ui for buttons under players in one circuit
         """
@@ -52,17 +52,17 @@ class UiBuilder:
             filled_timestamp = ui.button(text="-- take your pick --").classes("my-auto")
             filled_timestamp.disable()
 
-        with ui.row():
-            ui.button(text="Close", on_click=expansion.close)
-
         return CircuitFormButtons(
             confirm=button_confirm,
             edit=edit_button,
             timestamp=filled_timestamp
         )
 
-    @staticmethod
-    def _build_player_form(players: PlayersStruct, driver_options: dict[int, str]) -> CircuitFormPlayers:
+    def _build_player_form(
+            self,
+            players: PlayersStruct,
+            driver_options: dict[int, str],
+    ) -> CircuitFormPlayers:
         """
         Ui for players in one circuit
         """
@@ -79,10 +79,13 @@ class UiBuilder:
                 pten_select = ui.select(driver_options, value=pten_value, label="Position 10")
                 dnf_select = ui.select(driver_options, value=dnf_value, label="First DNF")
 
+            form_buttons: CircuitFormButtons = self._build_form_buttons()
+
             created_players.players[player_name] = CircuitFormPlayer(
                 label=label,
                 pten=pten_select,
                 dnf=dnf_select,
+                buttons=form_buttons,
             )
 
         return created_players
@@ -98,12 +101,12 @@ class UiBuilder:
         """
         with ui.expansion(circuit.title, caption=circuit.date_span, icon="keyboard_double_arrow_right") as exp:
             form_players: CircuitFormPlayers = self._build_player_form(players, driver_options)
-            form_buttons: CircuitFormButtons = self._build_form_buttons(expansion=exp)
+            ui.button(text="Close", on_click=exp.close)
             form_table: CircuitFormWeekendTable = self._build_track_weekend_table(circuit)
 
         exp.style("width: 518px")
 
-        return CircuitFormStructure(players=form_players, buttons=form_buttons, table=form_table)
+        return CircuitFormStructure(players=form_players, table=form_table)
 
     def build_all_circuits(
             self,
@@ -111,11 +114,17 @@ class UiBuilder:
             circuits: Circuits,
             driver_options: dict[int, str]
     ) -> CircuitsFormStructure:
-        all_circuits: CircuitsFormStructure = CircuitsFormStructure(circuits=[])
+        all_circuits: CircuitsFormStructure = CircuitsFormStructure(circuits={})
 
         with ui.row():
             for circuit in circuits.all:
                 one_circuit: CircuitFormStructure = self.build_circuit(players, circuit, driver_options)
-                all_circuits.circuits.append(one_circuit)
+                all_circuits.circuits[circuit.title] = one_circuit
 
         return all_circuits
+
+    def update_header(self, players: PlayersStruct):
+        """
+        Updates header with provided player data
+        """
+        ui_helpers.update_header(self.header, players)
