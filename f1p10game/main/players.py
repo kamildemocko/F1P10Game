@@ -1,25 +1,8 @@
 from pathlib import Path
 
 import arrow
-from pydantic import BaseModel
 
-
-class PlayerChoice(BaseModel):
-    circuit: str
-    pten: int
-    dnf: int
-    timestamp: str
-
-
-class Player(BaseModel):
-    name: str
-    points: int
-    choices: dict[str, PlayerChoice]
-    timestamp: str
-
-
-class PlayersStruct(BaseModel):
-    data: dict[str, Player]
+from f1p10game.main.types import PlayerChoice, Player, PlayersStruct
 
 
 class PlayersApp:
@@ -29,7 +12,7 @@ class PlayersApp:
 
     def get_players(self) -> PlayersStruct:
         if not self.path.exists():
-            return PlayersStruct(data={})
+            return self._get_initial_players_obj()
 
         with self.path.open("rb") as file:
             binary = file.read()

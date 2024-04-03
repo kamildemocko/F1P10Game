@@ -4,16 +4,17 @@ from dataclasses import dataclass
 import nicegui.ui
 from nicegui import ui
 
-from circuit import CircuitApp, Circuits
-from driver import DriverApp
-from players import PlayersApp, PlayersStruct, PlayerChoice
+from f1p10game.main.circuit import CircuitApp
+from f1p10game.main.driver import DriverApp
+from f1p10game.main.players import PlayersApp
+from f1p10game.main import types as ty
 from uis import ui_builder
 from logic.ui_logic import UiLogic
 
 
 @dataclass
 class UiFields:
-    filled_choices: PlayerChoice | None
+    filled_choices: ty.PlayerChoice | None
     pten_select: nicegui.ui.select
     dnf_select: nicegui.ui.select
 
@@ -28,16 +29,16 @@ class Main:
         self.circuits_path: Path = Path("./data/circuits.json")
         self.circuit_handle = CircuitApp(self.circuits_path)
 
-        self.initial_players = ["Kamil", "Katka"]
-        self.players_path = Path("data/aplayers.json")
-        self.players_handle = PlayersApp(self.players_path)
+        initial_players = ["Kamil", "Katka"]
+        self.players_path = Path("data/players.json")
+        self.players_handle = PlayersApp(self.players_path, initial_players)
 
         self.logic_handle = UiLogic(self.players_handle)
 
     def run(self):
-        players: PlayersStruct = self.players_handle.get_players()
+        players: ty.PlayersStruct = self.players_handle.get_players()
 
-        circuits: Circuits = self.circuit_handle.data
+        circuits: ty.Circuits = self.circuit_handle.data
 
         ui_builder_handle = ui_builder.UiBuilder(title=self.title, players=players)
         ui_elements = ui_builder_handle.build_all_circuits(

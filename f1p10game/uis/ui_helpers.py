@@ -1,6 +1,6 @@
 from nicegui import ui
 
-from ..players import PlayersStruct
+from f1p10game.main import types as ty
 
 
 def init_ui_settings(title: str):
@@ -9,7 +9,7 @@ def init_ui_settings(title: str):
     ui.separator()
 
 
-def init_header(players: PlayersStruct) -> ui.html:
+def init_header(players: ty.PlayersStruct) -> ui.html:
     p = players.data.values()
     sorted(p, key=lambda x: x.points)
 
@@ -24,7 +24,7 @@ def init_header(players: PlayersStruct) -> ui.html:
     return label
 
 
-def update_header(header_element: ui.html, players: PlayersStruct):
+def update_header(header_element: ui.html, players: ty.PlayersStruct):
     p = players.data.values()
     sorted(p, key=lambda x: x.points)
 

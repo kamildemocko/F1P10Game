@@ -2,7 +2,8 @@ from nicegui import ui
 
 from f1p10game.logic import helpers
 from f1p10game.uis import types as ui_types
-from f1p10game.players import PlayersStruct, PlayerChoice, PlayersApp
+from f1p10game.main.players import PlayersApp
+from f1p10game.main import types as ty
 
 
 class Actions:
@@ -19,10 +20,10 @@ class Actions:
     def on_confirm_button_clicked(
             self,
             buttons: ui_types.CircuitFormButtons,
-            players: PlayersStruct,
+            players: ty.PlayersStruct,
             pten_select: ui.select,
             dnf_select: ui.select,
-            picked_values: dict[str, PlayerChoice],
+            picked_values: dict[str, ty.PlayerChoice],
     ) -> None:
         buttons.confirm.disable()
         pten_select.disable()

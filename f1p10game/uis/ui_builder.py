@@ -9,18 +9,17 @@ from f1p10game.uis.types import (
     CircuitFormStructure,
     CircuitsFormStructure,
 )
-from f1p10game.players import PlayersStruct
-from f1p10game.circuit import Circuit, Circuits
+from f1p10game.main import types as ty
 
 
 class UiBuilder:
-    def __init__(self, title: str, players: PlayersStruct):
+    def __init__(self, title: str, players: ty.PlayersStruct):
         ui_helpers.init_ui_settings(title)
         self.header = ui_helpers.init_header(players)
         ui_helpers.init_footer()
 
     @staticmethod
-    def _build_track_weekend_table(circuit: Circuit) -> CircuitFormWeekendTable:
+    def _build_track_weekend_table(circuit: ty.Circuit) -> CircuitFormWeekendTable:
         """
         Ui for weekend table in one circuit
         """
@@ -60,7 +59,7 @@ class UiBuilder:
 
     def _build_player_form(
             self,
-            players: PlayersStruct,
+            players: ty.PlayersStruct,
             driver_options: dict[int, str],
     ) -> CircuitFormPlayers:
         """
@@ -92,8 +91,8 @@ class UiBuilder:
 
     def build_circuit(
             self,
-            players: PlayersStruct,
-            circuit: Circuit,
+            players: ty.PlayersStruct,
+            circuit: ty.Circuit,
             driver_options: dict[int, str]
     ) -> CircuitFormStructure:
         """
@@ -110,8 +109,8 @@ class UiBuilder:
 
     def build_all_circuits(
             self,
-            players: PlayersStruct,
-            circuits: Circuits,
+            players: ty.PlayersStruct,
+            circuits: ty.Circuits,
             driver_options: dict[int, str]
     ) -> CircuitsFormStructure:
         all_circuits: CircuitsFormStructure = CircuitsFormStructure(circuits={})
@@ -123,8 +122,8 @@ class UiBuilder:
 
         return all_circuits
 
-    def update_header(self, players: PlayersStruct):
+    def update_header(self, players: ty.PlayersStruct):
         """
-        Updates header with provided player data
+        Updates header with provided main data
         """
         ui_helpers.update_header(self.header, players)

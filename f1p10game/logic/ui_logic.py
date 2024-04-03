@@ -6,7 +6,8 @@ from nicegui import ui
 from f1p10game.uis import types as ui_types
 from f1p10game.logic.actions import Actions
 from f1p10game.logic import helpers
-from f1p10game.players import PlayersStruct, PlayerChoice, PlayersApp
+from f1p10game.main.players import PlayersApp
+from f1p10game.main import types as ty
 
 
 class UiLogic:
@@ -19,13 +20,13 @@ class UiLogic:
             players_elements: ui_types.CircuitFormPlayers,
             circuit_name: str,
             player_name: str,
-            player_choices: dict[str, PlayerChoice],
+            player_choices: dict[str, ty.PlayerChoice],
             on_confirm: Callable,
             on_edit: Callable,
     ) -> bool:
         """
-        Fills player data of form
-        :returns: True if player data was filled
+        Fills main data of form
+        :returns: True if main data was filled
         """
         player_form: ui_types.CircuitFormPlayer = players_elements.players[player_name]
         player_form.label.text = player_name
@@ -55,7 +56,7 @@ class UiLogic:
     def update_ui_data(
             self,
             all_circuits_elements: ui_types.CircuitsFormStructure,
-            players: PlayersStruct,
+            players: ty.PlayersStruct,
     ):
         for player_name, player_data in players.data.items():
 
@@ -81,11 +82,11 @@ class UiLogic:
             dnf_button: ui.select,
             player_name: str,
             circuit_name: str,
-    ) -> dict[str, PlayerChoice]:
+    ) -> dict[str, ty.PlayerChoice]:
         """
         Prepares a dictionary with circuit name that holds PlayerChoice
         """
-        values = {player_name: PlayerChoice(
+        values = {player_name: ty.PlayerChoice(
             circuit=circuit_name,
             pten=pten_button.value,
             dnf=dnf_button.value,
