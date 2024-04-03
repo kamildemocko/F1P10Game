@@ -49,7 +49,7 @@ class Main:
 
         self.logic_handle.update_ui_data(all_circuits_elements=ui_elements, players=players)
 
-        ui.run()
+        ui.run(viewport="width=device-width, initial-scale=1")
 
 
 if __name__ in {"__main__", "__mp_main__"}:

@@ -38,7 +38,7 @@ class PlayersApp:
 
         return PlayersStruct(data=ret)
 
-    def update_players(self, players: PlayersStruct, values: dict[str, PlayerChoice]):
+    async def update_players(self, players: PlayersStruct, values: dict[str, PlayerChoice]):
         """
         Updates json file players, this will receive one dictionary of track
         """

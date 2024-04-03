@@ -1,3 +1,5 @@
+import asyncio
+
 from nicegui import ui
 
 from f1p10game.logic import helpers
@@ -17,7 +19,7 @@ class Actions:
         player_form.buttons.confirm.enable()
         player_form.buttons.edit.disable()
 
-    def on_confirm_button_clicked(
+    async def on_confirm_button_clicked(
             self,
             buttons: ui_types.CircuitFormButtons,
             players: ty.PlayersStruct,
@@ -25,11 +27,24 @@ class Actions:
             dnf_select: ui.select,
             picked_values: dict[str, ty.PlayerChoice],
     ) -> None:
+        async def handle_update_players() -> bool:
+            """returns true if success"""
+            try:
+                await self.players_handle.update_players(players, picked_values)
+                return True
+
+            except Exception as exc:
+                buttons.timestamp.text = f"error:{exc[:45]}"
+                return False
+
         buttons.confirm.disable()
         pten_select.disable()
         dnf_select.disable()
+        buttons.timestamp.text = "-- Saving --"
 
-        self.players_handle.update_players(players, picked_values)
+        task = asyncio.create_task(handle_update_players())
 
-        buttons.timestamp.text = helpers.humanize_timestamp()
-        buttons.edit.enable()
+        if await task:
+            buttons.timestamp.text = helpers.humanize_timestamp()
+            buttons.edit.enable()
+

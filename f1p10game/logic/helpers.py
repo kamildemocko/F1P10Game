@@ -1,5 +1,6 @@
 from typing import Callable
 from functools import partial
+import random
 
 from nicegui import ui
 import arrow
@@ -13,6 +14,10 @@ def humanize_timestamp(timestamp: str | None = None) -> str:
         return arrow.utcnow().humanize()
 
     return arrow.get(timestamp).humanize()
+
+
+def pick_random_item(choices: list[str]) -> str:
+    return random.choice(choices)
 
 
 def prep_func_on_edit():
