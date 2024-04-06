@@ -59,33 +59,37 @@ class UiBuilder:
 
     def _build_player_form(
             self,
+            event: str,
             players: ty.PlayersStruct,
             driver_options: dict[int, str],
     ) -> CircuitFormPlayers:
         """
         Ui for players in one circuit
         """
-        created_players: CircuitFormPlayers = CircuitFormPlayers(players={})
+        created_players: CircuitFormPlayers = {}
 
-        for player_name, player_data in players.data.items():
-            pten_value: int = list(driver_options.keys())[0]
-            dnf_value: int = list(driver_options.keys())[0]
+        with ui.card().classes("border-[1px] gap-y-3 w-full"):
+            ui.label(text=event)
+            ui.separator()
+            for player_name, player_data in players.data.items():
+                pten_value: int = list(driver_options.keys())[0]
+                dnf_value: int = list(driver_options.keys())[0]
 
-            with ui.row():
-                label = ui.label(text="").style("font-size: 130%;").classes("my-auto")
+                label = ui.label(text="").style("font-size: 120%;").classes("my-auto font-bold")
+                with ui.row():
+                    pten_select = ui.select(driver_options, value=pten_value, label="Position 10")
+                    dnf_select = ui.select(driver_options, value=dnf_value, label="First DNF")
+
+                form_buttons: CircuitFormButtons = self._build_form_buttons()
+
+                created_players[player_name] = CircuitFormPlayer(
+                    label=label,
+                    pten=pten_select,
+                    dnf=dnf_select,
+                    buttons=form_buttons,
+                )
+
                 ui.space()
-
-                pten_select = ui.select(driver_options, value=pten_value, label="Position 10")
-                dnf_select = ui.select(driver_options, value=dnf_value, label="First DNF")
-
-            form_buttons: CircuitFormButtons = self._build_form_buttons()
-
-            created_players.players[player_name] = CircuitFormPlayer(
-                label=label,
-                pten=pten_select,
-                dnf=dnf_select,
-                buttons=form_buttons,
-            )
 
         return created_players
 
@@ -99,13 +103,22 @@ class UiBuilder:
         Builds UI for one circuit
         """
         with ui.expansion(circuit.title, caption=circuit.date_span, icon="keyboard_double_arrow_right") as exp:
-            form_players: CircuitFormPlayers = self._build_player_form(players, driver_options)
+            sprint_weekend: bool = len([ci for ci in circuit.weekend_structure if "Sprint" in ci.name]) > 0
+
+            form_players_race: CircuitFormPlayers = self._build_player_form(
+                "Race", players, driver_options
+            )
+
+            form_players_sprint: CircuitFormPlayers | None = self._build_player_form(
+                "Sprint", players, driver_options
+            ) if sprint_weekend else None
+
             ui.button(text="Close", on_click=exp.close)
             form_table: CircuitFormWeekendTable = self._build_track_weekend_table(circuit)
 
-        exp.style("width: 518px")
+        exp.style("width: 412px")
 
-        return CircuitFormStructure(players=form_players, table=form_table)
+        return CircuitFormStructure(race=form_players_race, sprint=form_players_sprint, table=form_table)
 
     def build_all_circuits(
             self,
@@ -113,12 +126,12 @@ class UiBuilder:
             circuits: ty.Circuits,
             driver_options: dict[int, str]
     ) -> CircuitsFormStructure:
-        all_circuits: CircuitsFormStructure = CircuitsFormStructure(circuits={})
+        all_circuits: CircuitsFormStructure = {}
 
         with ui.row():
             for circuit in circuits.all:
                 one_circuit: CircuitFormStructure = self.build_circuit(players, circuit, driver_options)
-                all_circuits.circuits[circuit.title] = one_circuit
+                all_circuits[circuit.title] = one_circuit
 
         return all_circuits
 

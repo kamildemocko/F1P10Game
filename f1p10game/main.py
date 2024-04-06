@@ -7,6 +7,7 @@ from nicegui import ui
 from f1p10game.main.circuit import CircuitApp
 from f1p10game.main.driver import DriverApp
 from f1p10game.main.players import PlayersApp
+from f1p10game.results.results import ResultsApp, Results
 from f1p10game.main import types as ty
 from uis import ui_builder
 from logic.ui_logic import UiLogic
@@ -33,6 +34,9 @@ class Main:
         self.players_path = Path("data/players.json")
         self.players_handle = PlayersApp(self.players_path, initial_players)
 
+        self.results_path = Path("data/results.json")
+        self.results_handle = ResultsApp(self.results_path)
+
         self.logic_handle = UiLogic(self.players_handle)
 
     def run(self):
@@ -47,7 +51,11 @@ class Main:
             driver_options=self.drivers_handle.get_driver_names_for_dropdown(),
         )
 
-        self.logic_handle.update_ui_data(all_circuits_elements=ui_elements, players=players)
+        self.logic_handle.update_ui_data(
+            all_circuits_elements=ui_elements,
+            players=players,
+            results_handle=self.results_handle
+        )
 
         ui.run(viewport="width=device-width, initial-scale=1")
 

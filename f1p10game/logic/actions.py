@@ -26,15 +26,17 @@ class Actions:
             pten_select: ui.select,
             dnf_select: ui.select,
             picked_values: dict[str, ty.PlayerChoice],
+            event_type: str,
     ) -> None:
         async def handle_update_players() -> bool:
             """returns true if success"""
             try:
-                await self.players_handle.update_players(players, picked_values)
+                await self.players_handle.update_players(players, picked_values, event_type)
                 return True
 
             except Exception as exc:
-                buttons.timestamp.text = f"error:{exc[:45]}"
+                print(exc)
+                buttons.timestamp.text = f"error:{str(exc)[:33]}"
                 return False
 
         buttons.confirm.disable()

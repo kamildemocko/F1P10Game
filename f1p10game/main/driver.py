@@ -15,6 +15,6 @@ class DriverApp:
     def get_driver_names_for_dropdown(self) -> dict[int, str]:
         data = {driver.number: f"{driver.number}: {driver.name.title()}" for driver in self.data.all}
 
-        data = dict(sorted(data.items()))
+        data = dict(sorted(data.items(), key=lambda x: x[1].split(" ")[-1].strip()))
 
         return data

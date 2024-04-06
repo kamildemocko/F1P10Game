@@ -32,19 +32,29 @@ class PlayersApp:
             ret[name] = Player(
                 name=name,
                 points=0,
-                choices={},
+                choices_race={},
                 timestamp=arrow.utcnow().isoformat(),
             )
 
         return PlayersStruct(data=ret)
 
-    async def update_players(self, players: PlayersStruct, values: dict[str, PlayerChoice]):
+    async def update_players(
+            self,
+            players: PlayersStruct,
+            values: dict[str, PlayerChoice],
+            event_type: str,
+    ) -> None:
         """
         Updates json file players, this will receive one dictionary of track
         """
         for name, choices in values.items():
             circuit_name = values[name].circuit
-            players.data[name].choices[circuit_name] = values[name]
+            if event_type == "race":
+                players.data[name].choices_race[circuit_name] = values[name]
+            elif event_type == "sprint":
+                players.data[name].choices_sprint[circuit_name] = values[name]
+            else:
+                raise ValueError("wrong event type")
 
         self.save_players(players)
 

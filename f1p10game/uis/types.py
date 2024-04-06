@@ -23,17 +23,14 @@ class CircuitFormPlayer:
     buttons: CircuitFormButtons
 
 
-@dataclass()
-class CircuitFormPlayers:
-    players: dict[str, CircuitFormPlayer]
+CircuitFormPlayers = dict[str, CircuitFormPlayer]
 
 
 @dataclass
 class CircuitFormStructure:
-    players: CircuitFormPlayers
+    race: dict[str, CircuitFormPlayer]
+    sprint: dict[str, CircuitFormPlayer] | None
     table: CircuitFormWeekendTable
 
 
-@dataclass
-class CircuitsFormStructure:
-    circuits: dict[str, CircuitFormStructure]
+CircuitsFormStructure = dict[str, CircuitFormStructure]

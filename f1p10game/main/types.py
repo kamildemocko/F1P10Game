@@ -12,7 +12,8 @@ class PlayerChoice(BaseModel):
 class Player(BaseModel):
     name: str
     points: int
-    choices: dict[str, PlayerChoice]
+    choices_race: dict[str, PlayerChoice]
+    choices_sprint: dict[str, PlayerChoice]
     timestamp: str
 
 
