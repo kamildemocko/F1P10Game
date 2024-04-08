@@ -1,6 +1,5 @@
 from typing import Callable
 from functools import partial
-import random
 
 import arrow
 
@@ -10,6 +9,9 @@ from f1p10game.results import types as res_types
 
 
 def humanize_timestamp(timestamp: str | None = None) -> str:
+    """
+    Returns humanized time ref of time from timestamp
+    """
     if timestamp is None:
         return arrow.utcnow().humanize()
 
@@ -44,16 +46,16 @@ def prep_points_label(
 ) -> str:
     """
     Prepares label in player form under his picks
-    "returns" prepared str for label
+    :returns: prepared str for label
     """
     pten_driver = [pl.driver_name for pl in results if pl.driver_number == player_choice.pten][0]
     dnf_driver = [pl.driver_name for pl in results if pl.driver_number == player_choice.dnf][0]
 
     text_prep: list[str] = []
     if points.pten > 0:
-        text_prep.append(f"{pten_driver}: {points.pten}")
+        text_prep.append(f"{pten_driver}: {points.pten} pts for position {points.pten_position}")
 
     if points.dnf > 0:
-        text_prep.append(f"{dnf_driver}: {points.dnf}")
+        text_prep.append(f"{dnf_driver}: {points.dnf} pts for first DNF")
 
     return ", ". join(text_prep)

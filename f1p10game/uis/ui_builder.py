@@ -15,7 +15,7 @@ from f1p10game.logic import actions
 
 
 class UiBuilder:
-    def __init__(self, title: str, player_handle: PlayersApp):
+    def __init__(self, title: str, player_handle: PlayersApp) -> None:
         self.player_handle: PlayersApp = player_handle
         self.players: ty.PlayersStruct = self.player_handle.get_players()
 
@@ -25,6 +25,7 @@ class UiBuilder:
     def _build_track_weekend_table(circuit: ty.Circuit) -> CircuitFormWeekendTable:
         """
         Ui for weekend table in one circuit
+        :returns: Form of table - elements of table
         """
         return ui.aggrid({
             "defaultColDef": {"flex": 1},
@@ -44,6 +45,7 @@ class UiBuilder:
     def _build_form_buttons() -> CircuitFormButtons:
         """
         Ui for buttons under players in one circuit
+        :returns: Form of buttons - elements
         """
         with ui.row():
             button_confirm = ui.button(text="Set").classes("my-auto")
@@ -67,6 +69,7 @@ class UiBuilder:
     ) -> CircuitFormPlayers:
         """
         Ui for player form part in one circuit
+        :returns: Form of players - elements
         """
         players = self.player_handle.get_players()
         created_players: CircuitFormPlayers = {}
@@ -100,12 +103,12 @@ class UiBuilder:
 
     def build_circuit(
             self,
-            players: ty.PlayersStruct,
             circuit: ty.Circuit,
             driver_options: dict[int, str]
     ) -> CircuitFormStructure:
         """
         Builds UI for ONE circuit
+        :returns: Structure of the circuit - ui elements
         """
         with ui.expansion(circuit.title, caption=circuit.date_span, icon="keyboard_double_arrow_right") as exp:
             sprint_weekend: bool = len([ci for ci in circuit.weekend_structure if "Sprint" in ci.name]) > 0
@@ -121,15 +124,11 @@ class UiBuilder:
             ui.button(text="Close", on_click=exp.close)
             form_table: CircuitFormWeekendTable = self._build_track_weekend_table(circuit)
 
-        exp.style("width: 412px")
+        exp.style("width: 428px")
 
         return CircuitFormStructure(race=form_players_race, sprint=form_players_sprint, table=form_table)
 
-    def build_ui(
-            self,
-            circuits: ty.Circuits,
-            driver_options: dict[int, str]
-    ) -> UiStructure:
+    def build_ui(self, circuits: ty.Circuits, driver_options: dict[int, str]) -> UiStructure:
         """
         Builds all the circuits available one by one
         """
@@ -138,7 +137,7 @@ class UiBuilder:
 
         with ui.row():
             for circuit in circuits.all:
-                one_circuit: CircuitFormStructure = self.build_circuit(self.players, circuit, driver_options)
+                one_circuit: CircuitFormStructure = self.build_circuit(circuit, driver_options)
                 all_circuits[circuit.title] = one_circuit
 
         self.build_footer()
@@ -147,6 +146,9 @@ class UiBuilder:
 
     @staticmethod
     def build_footer() -> None:
+        """
+        Builds footer of the app
+        """
         with ui.footer() as footer:
             footer.style("background-color: crimson; color: white;")
             ui.label(text="2024 Kamil Democko")
@@ -154,13 +156,12 @@ class UiBuilder:
 
     @staticmethod
     def build_header(players: ty.PlayersStruct) -> ui.html:
-        # emo_cycle = cycle(["🐶", "🐱", "🐭", "🐹", "🐰", "🐻", "🐼", "🐨", "🐯", "🐮", "🐷", "🐸", "🐵"])
-        #
-        # def handle_dice_link_click(el: ui.link) -> None:
-        #     ra = pick_random_item([pl.name for pl in players.data.values()])
-        #     el.text = f"{next(emo_cycle)} {ra}! Another roll?"
-
+        """
+        Builds header of the app
+        :returns: UI HTML element for updating points
+        """
         labels = []
+
         with ui.header() as header:
             header.style("background-color: crimson; color: white;")
             for index, player in enumerate(players.data.values(), start=1):

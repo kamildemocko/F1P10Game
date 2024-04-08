@@ -1,24 +1,15 @@
 from pathlib import Path
-from dataclasses import dataclass
 
-import nicegui.ui
 from nicegui import ui
 
 from f1p10game.main.circuit import CircuitApp
 from f1p10game.main.driver import DriverApp
 from f1p10game.main.players import PlayersApp
-from f1p10game.results.results import ResultsApp, Results
+from f1p10game.results.results import ResultsApp
 from f1p10game.main import types as ty
 from f1p10game.uis import types as ui_ty
 from uis import ui_builder
 from logic.ui_logic import UiLogic
-
-
-@dataclass
-class UiFields:
-    filled_choices: ty.PlayerChoice | None
-    pten_select: nicegui.ui.select
-    dnf_select: nicegui.ui.select
 
 
 class Main:

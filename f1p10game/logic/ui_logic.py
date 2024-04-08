@@ -89,12 +89,13 @@ class UiLogic:
         pten_points = result_table.get_points_for_position(
             int(pten_result.position) if pten_result.position.isnumeric() else 0
         )
-        dnf_points = 20 \
-            if dnf_result is not None \
-            and dnf_result.driver_number == player_choices.dnf \
-            else 0
+        pten_pos = int(pten_result.position) if pten_result.position.isnumeric() else 0
+        dnf_points = (20
+                      if dnf_result is not None
+                      and dnf_result.driver_number == player_choices.dnf
+                      else 0)
 
-        return ty.CalculatedPoints(pten_points, dnf_points)
+        return ty.CalculatedPoints(pten_points, pten_pos, dnf_points)
 
     def update_ui_data(self) -> None:
         """
@@ -147,6 +148,7 @@ class UiLogic:
                         players,
                         one_circuit_elements.sprint[player_name],
                         "sprint",
+                        self.update_ui_data,
                     ),
                     on_edit=self.actions_handle.on_edit_button_clicked,
                     results=results_for_circuit,

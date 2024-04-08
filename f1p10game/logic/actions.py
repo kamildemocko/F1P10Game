@@ -15,11 +15,14 @@ EMO_CYCLE = cycle(["🐶", "🐱", "🐭", "🐹", "🐰", "🐻", "🐼", "🐨
 
 
 class Actions:
-    def __init__(self, players_handle: PlayersApp):
+    def __init__(self, players_handle: PlayersApp) -> None:
         self.players_handle = players_handle
 
     @staticmethod
     def on_edit_button_clicked(player_form: ui_types.CircuitFormPlayer) -> None:
+        """
+        Executed on edit button clicked
+        """
         player_form.pten.enable()
         player_form.dnf.enable()
         player_form.buttons.confirm.enable()
@@ -63,10 +66,9 @@ class Actions:
             buttons.edit.enable()
 
 
-def pick_player_at_random(el: ui.html, players: ty.PlayersStruct):
+def pick_player_at_random(el: ui.html, players: ty.PlayersStruct) -> None:
     """
     Picks one player and updates UI
-
     """
     ra = random.choice([pl.name for pl in players.data.values()])
     el.text = f"{next(EMO_CYCLE)} {ra}! Another roll?"

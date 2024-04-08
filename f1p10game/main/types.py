@@ -26,6 +26,7 @@ PointsTuple = tuple[int, int]
 @dataclass
 class CalculatedPoints:
     pten: int
+    pten_position: int
     dnf: int
 
 

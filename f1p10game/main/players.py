@@ -11,6 +11,9 @@ class PlayersApp:
         self.default_names: list[str] = default_names or ["Player1"]
 
     def get_players(self) -> PlayersStruct:
+        """
+        Reads players from json file
+        """
         if not self.path.exists():
             return self._get_initial_players_obj()
 
@@ -23,11 +26,18 @@ class PlayersApp:
         return PlayersStruct.model_validate_json(binary)
 
     def save_players(self, data: PlayersStruct) -> None:
+        """
+        Saves data to a json file
+        """
         with self.path.open("w") as file:
             file.write(data.model_dump_json(indent=4))
 
     def _get_initial_players_obj(self) -> PlayersStruct:
+        """
+        Returns default players
+        """
         ret = {}
+
         for name in self.default_names:
             ret[name] = Player(
                 name=name,
@@ -57,4 +67,3 @@ class PlayersApp:
                 raise ValueError("wrong event type")
 
         self.save_players(players)
-
