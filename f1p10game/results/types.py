@@ -7,8 +7,8 @@ class Result(BaseModel):
     driver_name: str
     team_name: str
     time: str
-    points: int
+    points: str
 
 
 class Results(BaseModel):
-    data: list[dict[str, list[Result]]]
+    data: dict[str, list[Result]]

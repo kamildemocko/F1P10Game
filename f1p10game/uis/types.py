@@ -21,6 +21,7 @@ class CircuitFormPlayer:
     pten: ui.select
     dnf: ui.select
     buttons: CircuitFormButtons
+    result_label: ui.label
 
 
 CircuitFormPlayers = dict[str, CircuitFormPlayer]
@@ -33,4 +34,8 @@ class CircuitFormStructure:
     table: CircuitFormWeekendTable
 
 
-CircuitsFormStructure = dict[str, CircuitFormStructure]
+# CircuitsFormStructure = dict[str, CircuitFormStructure]
+@dataclass
+class UiStructure:
+    header: ui.html
+    circuits: dict[str, CircuitFormStructure]

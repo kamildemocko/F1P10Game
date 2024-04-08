@@ -13,8 +13,14 @@ class ResultsApp:
             return Results.model_validate_json(file.read())
 
     def get_result_for_circuit(self, circuit_name: str) -> list[Result] | None:
-        this_circuit: Result | None = self.data.data.get(circuit_name, None)
+        """
+        Filters result from one track
+        :returns: list of Result type (should be sorted when scrapped)
+        """
+        search_circuit: str = circuit_name.lower()
+        case_lower_data: dict[str, list[Result]] = {k.lower(): v for k, v in self.data.data.items()}
+        this_circuit: list[Result] | None = case_lower_data.get(search_circuit)
         if this_circuit is None:
             return None
 
-        return sorted(this_circuit, key=lambda x: x.position)
+        return this_circuit

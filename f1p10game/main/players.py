@@ -31,8 +31,8 @@ class PlayersApp:
         for name in self.default_names:
             ret[name] = Player(
                 name=name,
-                points=0,
                 choices_race={},
+                choices_sprint={},
                 timestamp=arrow.utcnow().isoformat(),
             )
 

@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from pydantic import BaseModel, Field
 
 
@@ -11,10 +13,20 @@ class PlayerChoice(BaseModel):
 
 class Player(BaseModel):
     name: str
-    points: int
     choices_race: dict[str, PlayerChoice]
     choices_sprint: dict[str, PlayerChoice]
     timestamp: str
+
+
+PlayerPoints = dict[str, int]
+
+PointsTuple = tuple[int, int]
+
+
+@dataclass
+class CalculatedPoints:
+    pten: int
+    dnf: int
 
 
 class PlayersStruct(BaseModel):

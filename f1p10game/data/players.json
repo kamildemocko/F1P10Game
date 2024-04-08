@@ -2,7 +2,6 @@
     "data": {
         "Kamil": {
             "name": "Kamil",
-            "points": 0,
             "choices_race": {
                 "AUSTRALIA": {
                     "circuit": "AUSTRALIA",
@@ -14,46 +13,26 @@
                     "circuit": "BAHRAIN",
                     "pten": 3,
                     "dnf": 20,
-                    "timestamp": "2024-04-03T20:13:28.545276+00:00"
+                    "timestamp": "2024-04-08T15:54:22.290837+00:00"
                 },
                 "SAUDI ARABIA": {
                     "circuit": "SAUDI ARABIA",
                     "pten": 44,
                     "dnf": 1,
-                    "timestamp": "2024-04-03T20:16:36.253634+00:00"
+                    "timestamp": "2024-04-08T15:54:27.439234+00:00"
                 },
-                "AZERBAIJAN": {
-                    "circuit": "AZERBAIJAN",
-                    "pten": 1,
-                    "dnf": 1,
-                    "timestamp": "2024-04-03T20:28:39.065304+00:00"
-                },
-                "BELGIUM": {
-                    "circuit": "BELGIUM",
-                    "pten": 24,
-                    "dnf": 1,
-                    "timestamp": "2024-04-03T20:29:16.883501+00:00"
-                },
-                "CHINA": {
-                    "circuit": "CHINA",
-                    "pten": 23,
-                    "dnf": 23,
-                    "timestamp": "2024-04-06T11:20:27.733154+00:00"
+                "JAPAN": {
+                    "circuit": "JAPAN",
+                    "pten": 44,
+                    "dnf": 20,
+                    "timestamp": "2024-04-07T07:39:40.510749+00:00"
                 }
             },
-            "choices_sprint": {
-                "CHINA": {
-                    "circuit": "CHINA",
-                    "pten": 24,
-                    "dnf": 77,
-                    "timestamp": "2024-04-06T11:21:08.365624+00:00"
-                }
-            },
+            "choices_sprint": {},
             "timestamp": "2024-04-03T19:45:47.786237+00:00"
         },
         "Katka": {
             "name": "Katka",
-            "points": 0,
             "choices_race": {
                 "AUSTRALIA": {
                     "circuit": "AUSTRALIA",
@@ -73,33 +52,14 @@
                     "dnf": 2,
                     "timestamp": "2024-04-03T20:12:27.663117+00:00"
                 },
-                "HUNGARY": {
-                    "circuit": "HUNGARY",
-                    "pten": 1,
-                    "dnf": 1,
-                    "timestamp": "2024-04-03T20:43:07.517738+00:00"
-                },
                 "JAPAN": {
                     "circuit": "JAPAN",
-                    "pten": 2,
-                    "dnf": 1,
-                    "timestamp": "2024-04-03T20:43:27.320964+00:00"
-                },
-                "CHINA": {
-                    "circuit": "CHINA",
-                    "pten": 11,
-                    "dnf": 31,
-                    "timestamp": "2024-04-06T11:21:16.416529+00:00"
+                    "pten": 16,
+                    "dnf": 63,
+                    "timestamp": "2024-04-07T07:40:05.124054+00:00"
                 }
             },
-            "choices_sprint": {
-                "CHINA": {
-                    "circuit": "CHINA",
-                    "pten": 4,
-                    "dnf": 3,
-                    "timestamp": "2024-04-06T11:21:04.980673+00:00"
-                }
-            },
+            "choices_sprint": {},
             "timestamp": "2024-04-03T19:45:47.786256+00:00"
         }
     }
