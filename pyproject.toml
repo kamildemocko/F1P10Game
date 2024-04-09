@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "f1p10game"
-version = "0.3.3"
+version = "0.3.4"
 description = ""
 authors = ["Kamil Democko <kamil.democko@gmail.com>"]
 readme = "README.md"

@@ -112,7 +112,11 @@ class UiBuilder:
         Builds UI for ONE circuit
         :returns: Structure of the circuit - ui elements
         """
-        with ui.expansion(circuit.title, caption=circuit.date_span, icon="keyboard_double_arrow_right") as exp:
+        with ui.expansion(
+                circuit.circuit_name.replace("2024", "").replace("FORMULA 1", "").strip(),
+                caption=f"{circuit.title} ({circuit.date_span})",
+                icon="keyboard_double_arrow_right"
+        ) as exp:
             sprint_weekend: bool = len([ci for ci in circuit.weekend_structure if "Sprint" in ci.name]) > 0
 
             with ui.row().classes("justify-center w-full"):

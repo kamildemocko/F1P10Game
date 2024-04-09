@@ -67,6 +67,7 @@ class CircuitWeekendStructure(BaseModel):
 
 class Circuit(BaseModel):
     title: str
+    circuit_name: str
     date_span: str
     weekend_structure: list[CircuitWeekendStructure]
 
