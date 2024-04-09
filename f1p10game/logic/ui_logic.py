@@ -129,11 +129,6 @@ class UiLogic:
 
                 points[player_name] = points.get(player_name, 0) + pten_points + dnf_points
 
-                # TODO this triggers and the player lables in sprint are not filled
-                if not race_form_filled:
-                    """form not yet filled"""
-                    continue
-
                 if one_circuit_elements.sprint is None:
                     """no sprint this weekend"""
                     continue
