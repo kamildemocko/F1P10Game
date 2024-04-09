@@ -83,7 +83,7 @@ class UiLogic:
         Calculates points from player choices
         :returns: dataclass of points for player
         """
-        pten_result: Result = [pl for pl in results if pl.driver_number == player_choices.pten][0]
+        pten_result: Result = [pl for pl in results if pl.driver_name == player_choices.pten][0]
         dnf_result: Result = results[-1] if results[-1].time.lower() == "dnf" else None
 
         pten_points = result_table.get_points_for_position(
@@ -92,7 +92,7 @@ class UiLogic:
         pten_pos = int(pten_result.position) if pten_result.position.isnumeric() else 0
         dnf_points = (20
                       if dnf_result is not None
-                      and dnf_result.driver_number == player_choices.dnf
+                      and dnf_result.driver_name == player_choices.dnf
                       else 0)
 
         return ty.CalculatedPoints(pten_points, pten_pos, dnf_points)

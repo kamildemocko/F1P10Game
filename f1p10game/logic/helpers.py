@@ -48,8 +48,8 @@ def prep_points_label(
     Prepares label in player form under his picks
     :returns: prepared str for label
     """
-    pten_driver = [pl.driver_name for pl in results if pl.driver_number == player_choice.pten][0]
-    dnf_driver = [pl.driver_name for pl in results if pl.driver_number == player_choice.dnf][0]
+    pten_driver = [pl.driver_name for pl in results if pl.driver_name == player_choice.pten][0]
+    dnf_driver = [pl.driver_name for pl in results if pl.driver_name == player_choice.dnf][0]
 
     text_prep: list[str] = []
     if points.pten > 0:

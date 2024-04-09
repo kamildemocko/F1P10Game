@@ -13,8 +13,10 @@ class DriverApp:
             return ty.Drivers.model_validate_json(file.read())
 
     def get_driver_names_for_dropdown(self) -> dict[int, str]:
-        data = {driver.number: f"{driver.number}: {driver.name.title()}" for driver in self.data.all}
 
-        data = dict(sorted(data.items(), key=lambda x: x[1].split(" ")[-1].strip()))
+        data = {driver.name: f"{driver.lastname.title()}, {driver.firstname.title()} {driver.number}"
+                for driver in self.data.all}
+
+        data = dict(sorted(data.items(), key=lambda x: x[1]))
 
         return data

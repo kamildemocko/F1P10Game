@@ -3,64 +3,64 @@
         "Kamil": {
             "name": "Kamil",
             "choices_race": {
-                "AUSTRALIA": {
-                    "circuit": "AUSTRALIA",
-                    "pten": 14,
-                    "dnf": 23,
-                    "timestamp": "2024-04-03T19:48:37.222149+00:00"
-                },
                 "BAHRAIN": {
                     "circuit": "BAHRAIN",
-                    "pten": 3,
-                    "dnf": 20,
-                    "timestamp": "2024-04-08T16:16:34.095067+00:00"
+                    "pten": "Daniel Ricciardo",
+                    "dnf": "Kevin Magnussen",
+                    "timestamp": "2024-04-09T15:15:03.512787+00:00"
                 },
                 "SAUDI ARABIA": {
                     "circuit": "SAUDI ARABIA",
-                    "pten": 44,
-                    "dnf": 1,
-                    "timestamp": "2024-04-08T15:54:27.439234+00:00"
+                    "pten": "Lewis Hamilton",
+                    "dnf": "Max Verstappen",
+                    "timestamp": "2024-04-09T15:15:41.978459+00:00"
+                },
+                "AUSTRALIA": {
+                    "circuit": "AUSTRALIA",
+                    "pten": "Fernando Alonso",
+                    "dnf": "Alexander Albon",
+                    "timestamp": "2024-04-09T15:16:07.245735+00:00"
                 },
                 "JAPAN": {
                     "circuit": "JAPAN",
-                    "pten": 44,
-                    "dnf": 20,
-                    "timestamp": "2024-04-07T07:39:40.510749+00:00"
+                    "pten": "Lewis Hamilton",
+                    "dnf": "Kevin Magnussen",
+                    "timestamp": "2024-04-09T15:16:31.888776+00:00"
                 }
             },
             "choices_sprint": {},
-            "timestamp": "2024-04-03T19:45:47.786237+00:00"
+            "timestamp": "2024-04-09T15:10:42.095401+00:00"
         },
         "Katka": {
             "name": "Katka",
             "choices_race": {
-                "AUSTRALIA": {
-                    "circuit": "AUSTRALIA",
-                    "pten": 44,
-                    "dnf": 18,
-                    "timestamp": "2024-04-03T19:49:35.666104+00:00"
-                },
                 "BAHRAIN": {
                     "circuit": "BAHRAIN",
-                    "pten": 14,
-                    "dnf": 2,
-                    "timestamp": "2024-04-03T20:09:36.245033+00:00"
+                    "pten": "Fernando Alonso",
+                    "dnf": "Logan Sargeant",
+                    "timestamp": "2024-04-09T15:15:13.550057+00:00"
                 },
                 "SAUDI ARABIA": {
                     "circuit": "SAUDI ARABIA",
-                    "pten": 14,
-                    "dnf": 2,
-                    "timestamp": "2024-04-03T20:12:27.663117+00:00"
+                    "pten": "Fernando Alonso",
+                    "dnf": "Logan Sargeant",
+                    "timestamp": "2024-04-09T15:15:49.903096+00:00"
+                },
+                "AUSTRALIA": {
+                    "circuit": "AUSTRALIA",
+                    "pten": "Lewis Hamilton",
+                    "dnf": "Lance Stroll",
+                    "timestamp": "2024-04-09T15:16:19.604124+00:00"
                 },
                 "JAPAN": {
                     "circuit": "JAPAN",
-                    "pten": 16,
-                    "dnf": 63,
-                    "timestamp": "2024-04-07T07:40:05.124054+00:00"
+                    "pten": "Charles Leclerc",
+                    "dnf": "George Russell",
+                    "timestamp": "2024-04-09T15:16:38.007909+00:00"
                 }
             },
             "choices_sprint": {},
-            "timestamp": "2024-04-03T19:45:47.786256+00:00"
+            "timestamp": "2024-04-09T15:10:42.095409+00:00"
         }
     }
 }

@@ -6,8 +6,8 @@ from pydantic import BaseModel, Field
 # PLAYER
 class PlayerChoice(BaseModel):
     circuit: str
-    pten: int
-    dnf: int
+    pten: str
+    dnf: str
     timestamp: str
 
 
@@ -36,6 +36,8 @@ class PlayersStruct(BaseModel):
 
 # DRIVER
 class Driver(BaseModel):
+    firstname: str
+    lastname: str
     name: str
     short: str
     number: int
