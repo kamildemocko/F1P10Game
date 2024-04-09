@@ -157,10 +157,13 @@ class UiBuilder:
         """
         Builds footer of the app
         """
-        with ui.footer() as footer:
+        with ui.footer().classes("items-center") as footer:
             footer.style("background-color: crimson; color: white;")
             ui.label(text="2024 Kamil Democko")
             ui.link(text="GitHub", target="https://github.com/kamildemocko").classes("text-white")
+            ui.space()
+            dm = ui.dark_mode()
+            ui.button("Light / Dark", on_click=lambda x=dm: ui_helpers.switch_dark_mode(x)).classes("bg-black")
 
     @staticmethod
     def build_header(players: ty.PlayersStruct) -> ui.html:
