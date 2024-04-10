@@ -74,32 +74,37 @@ class UiBuilder:
         players = self.player_handle.get_players()
         created_players: CircuitFormPlayers = {}
 
-        if event == "Sprint":
-            ui.separator().classes("bg-sky-700")
+        with ui.row():
+            if event == "Sprint":
+                ui.separator().classes("bg-sky-700")
 
-        ui.label(text=event).style("font-size: 130%;").classes("my-auto font-bold")
-        ui.separator()
-        for player_name, player_data in players.data.items():
-            pten_value: int = list(driver_options.keys())[0]
-            dnf_value: int = list(driver_options.keys())[0]
+            ui.label(text=event).style("font-size: 130%;").classes("my-auto font-bold")
+            ui.separator()
+            for player_name, player_data in players.data.items():
+                pten_value: int = list(driver_options.keys())[0]
+                dnf_value: int = list(driver_options.keys())[0]
 
-            label = ui.label(text="").style("font-size: 120%;").classes("my-auto font-bold")
-            with ui.row():
-                pten_select = ui.select(driver_options, value=pten_value, label="Position 10").classes("w-auto")
-                dnf_select = ui.select(driver_options, value=dnf_value, label="First DNF").classes("w-auto")
-            res_label = ui.label(text="").classes("text-sky-700 w-auto")
+                with ui.column():
+                    with ui.row():
+                        label = ui.label(text="").style("font-size: 120%;").classes("my-auto font-bold")
 
-            form_buttons: CircuitFormButtons = self._build_form_buttons()
+                    with ui.row():
+                        pten_select = ui.select(driver_options, value=pten_value, label="Position 10").classes("w-auto")
+                        dnf_select = ui.select(driver_options, value=dnf_value, label="First DNF").classes("w-auto")
 
-            created_players[player_name] = CircuitFormPlayer(
-                label=label,
-                pten=pten_select,
-                dnf=dnf_select,
-                buttons=form_buttons,
-                result_label=res_label,
-            )
+                    with ui.row():
+                        form_buttons: CircuitFormButtons = self._build_form_buttons()
 
-            ui.space()
+                    with ui.row():
+                        res_label = ui.label(text="").classes("text-sky-700 w-auto")
+
+                    created_players[player_name] = CircuitFormPlayer(
+                        label=label,
+                        pten=pten_select,
+                        dnf=dnf_select,
+                        buttons=form_buttons,
+                        result_label=res_label,
+                    )
 
         return created_players
 
@@ -132,7 +137,8 @@ class UiBuilder:
                     ui.button(text="Close", on_click=exp.close)
                     form_table: CircuitFormWeekendTable = self._build_track_weekend_table(circuit)
 
-            exp.classes("w-full md:max-w-md border-[1px]")
+            exp.classes("w-full md:max-w-3xl border-[1px]")
+            # exp.classes("w-auto")
 
         return CircuitFormStructure(race=form_players_race, sprint=form_players_sprint, table=form_table)
 
