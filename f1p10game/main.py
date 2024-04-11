@@ -2,6 +2,7 @@ from pathlib import Path
 
 from nicegui import ui
 
+from f1p10game.main.config import get_config
 from f1p10game.main.circuit import CircuitApp
 from f1p10game.main.driver import DriverApp
 from f1p10game.main.players import PlayersApp
@@ -14,20 +15,13 @@ from logic.ui_logic import UiLogic
 
 class Main:
     def __init__(self):
-        self.title = "Formula 1 P-10 Game"
+        config = get_config()
 
-        self.drivers_path = Path("./data/drivers.json")
-        self.drivers_handle = DriverApp(self.drivers_path)
-
-        self.circuits_path: Path = Path("./data/circuits.json")
-        self.circuit_handle = CircuitApp(self.circuits_path)
-
-        initial_players = ["Kamil", "Katka"]
-        self.players_path = Path("data/players.json")
-        self.players_handle = PlayersApp(self.players_path, initial_players)
-
-        self.results_path = Path("data/results.json")
-        self.results_handle = ResultsApp(self.results_path)
+        self.title = config.title
+        self.drivers_handle = DriverApp(config.path_drivers)
+        self.circuit_handle = CircuitApp(config.path_circuits)
+        self.players_handle = PlayersApp(config.path_players, config.initial_players)
+        self.results_handle = ResultsApp(config.path_results)
 
         self.logic_handle: UiLogic | None = None
 
@@ -44,7 +38,7 @@ class Main:
         self.logic_handle = UiLogic(self.players_handle, self.results_handle, ui_elements)
         self.logic_handle.update_ui_data()
 
-        ui.run(viewport="width=device-width, initial-scale=1")
+        ui.run(viewport="width=device-width, initial-scale=1", port=80)
 
 
 if __name__ in {"__main__", "__mp_main__"}:

@@ -18,7 +18,7 @@ class ResultsApp:
         :returns: list of Result type (should be sorted when scrapped)
         """
         search_circuit: str = circuit_name.lower()
-        case_lower_data: dict[str, list[Result]] = {k.lower(): v for k, v in self.data.data.items()}
+        case_lower_data: dict[str, list[Result]] = {k.lower(): v for k, v in self.data.results.items()}
         this_circuit: list[Result] | None = case_lower_data.get(search_circuit)
         if this_circuit is None:
             return None

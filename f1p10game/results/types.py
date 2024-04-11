@@ -11,4 +11,4 @@ class Result(BaseModel):
 
 
 class Results(BaseModel):
-    data: dict[str, list[Result]]
+    results: dict[str, list[Result]]
