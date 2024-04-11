@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from nicegui import ui
 
 from f1p10game.main.config import get_config
