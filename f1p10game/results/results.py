@@ -4,7 +4,7 @@ from f1p10game.results.types import Result, Results
 
 
 class ResultsApp:
-    def __init__(self, path: Path):
+    def __init__(self, path: Path) -> None:
         self.path = path
         self.data = self._parse_data()
 

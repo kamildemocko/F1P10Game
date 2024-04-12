@@ -12,3 +12,8 @@ class Result(BaseModel):
 
 class Results(BaseModel):
     results: dict[str, list[Result]]
+
+
+class PTable(BaseModel):
+    race: dict[int, int]
+    sprint: dict[int, int]

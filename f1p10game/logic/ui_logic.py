@@ -1,4 +1,5 @@
 from typing import Callable
+from pathlib import Path
 
 import arrow
 from nicegui import ui
@@ -9,7 +10,7 @@ from f1p10game.logic import helpers
 from f1p10game.results.results import ResultsApp
 from f1p10game.mix.players import PlayersApp
 from f1p10game.results.types import Result
-from f1p10game.results import results_point_table as result_table
+from f1p10game.results.results_point_table import PointsTable
 from f1p10game.mix import types as ty
 
 
@@ -18,12 +19,14 @@ class UiLogic:
             self,
             player_handle: PlayersApp,
             result_handle: ResultsApp,
-            ui_elements: ui_types.UiStructure
+            ui_elements: ui_types.UiStructure,
+            points_table_path: Path,
     ) -> None:
         self.player_handle = player_handle
         self.actions_handle = Actions(self.player_handle)
         self.results_handle: ResultsApp = result_handle
         self.ui_elements: ui_types.UiStructure = ui_elements
+        self.points_table = PointsTable(points_table_path)
 
     def _fill_ui_form(
             self,
@@ -77,8 +80,7 @@ class UiLogic:
 
         return True, ty.PointsTuple((player_points.pten, player_points.dnf))
 
-    @staticmethod
-    def calculate_points(results: list[Result], player_choices: ty.PlayerChoice) -> ty.CalculatedPoints:
+    def calculate_points(self, results: list[Result], player_choices: ty.PlayerChoice) -> ty.CalculatedPoints:
         """
         Calculates points from player choices
         :returns: dataclass of points for player
@@ -86,10 +88,10 @@ class UiLogic:
         pten_result: Result = [pl for pl in results if pl.driver_name == player_choices.pten][0]
         dnf_result: Result = results[-1] if results[-1].time.lower() == "dnf" else None
 
-        pten_points = result_table.get_points_for_position(
+        pten_points: int = self.points_table.get_points_for_position(
             int(pten_result.position) if pten_result.position.isnumeric() else 0
         )
-        pten_pos = int(pten_result.position) if pten_result.position.isnumeric() else 0
+        pten_pos: int = int(pten_result.position) if pten_result.position.isnumeric() else 0
         dnf_points = (20
                       if dnf_result is not None
                       and dnf_result.driver_name == player_choices.dnf

@@ -11,6 +11,7 @@ class Config:
     path_circuits: Path
     path_players: Path
     path_results: Path
+    path_points_table: Path
 
 
 def get_config():
@@ -24,4 +25,5 @@ def get_config():
         path_circuits=Path(config.get("paths", "circuits_path")),
         path_players=Path(config.get("paths", "players_path")),
         path_results=Path(config.get("paths", "results_path")),
+        path_points_table=Path(config.get("paths", "points_path"))
     )

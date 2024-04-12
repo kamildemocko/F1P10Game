@@ -17,14 +17,14 @@ from f1p10game.logic.actions import LoggedIn
 
 class Main:
     def __init__(self):
-        config = get_config()
+        self.config = get_config()
         load_dotenv("./.env")
 
-        self.title = config.title
-        self.drivers_handle = DriverApp(config.path_drivers)
-        self.circuit_handle = CircuitApp(config.path_circuits)
-        self.players_handle = PlayersApp(config.path_players, config.initial_players)
-        self.results_handle = ResultsApp(config.path_results)
+        self.title = self.config.title
+        self.drivers_handle = DriverApp(self.config.path_drivers)
+        self.circuit_handle = CircuitApp(self.config.path_circuits)
+        self.players_handle = PlayersApp(self.config.path_players, self.config.initial_players)
+        self.results_handle = ResultsApp(self.config.path_results)
 
         self.logic_handle: UiLogic | None = None
         self.logged_in = LoggedIn
@@ -37,6 +37,7 @@ class Main:
         self.logged_in.logged_in = True
         login_button.disable()
         dialog.close()
+        ui.notify("Logged in", color="positive")
 
     def run(self):
         circuits: ty.Circuits = self.circuit_handle.data
@@ -48,7 +49,12 @@ class Main:
             handle_login=self.handle_login
         )
 
-        self.logic_handle = UiLogic(self.players_handle, self.results_handle, ui_elements)
+        self.logic_handle = UiLogic(
+            self.players_handle,
+            self.results_handle,
+            ui_elements,
+            self.config.path_points_table
+        )
         self.logic_handle.update_ui_data()
 
         ui.run(viewport="width=device-width, initial-scale=1", port=80)
