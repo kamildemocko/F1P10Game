@@ -48,7 +48,12 @@ poetry install
 ```
 
 Set up config.ini paths to point to the scrapper json files
-
+Run with:
 ```commandline
 poetry run f1p10game/main.py
+```
+
+set up your password in .env file in folder f1p10game:
+```text
+password=secret
 ```
