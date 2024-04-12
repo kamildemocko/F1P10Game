@@ -19,7 +19,7 @@
                     "circuit": "AUSTRALIA",
                     "pten": "Fernando Alonso",
                     "dnf": "Alexander Albon",
-                    "timestamp": "2024-04-09T19:18:09.656892+00:00"
+                    "timestamp": "2024-04-12T12:46:48.009047+00:00"
                 },
                 "JAPAN": {
                     "circuit": "JAPAN",
@@ -57,6 +57,12 @@
                     "pten": "Charles Leclerc",
                     "dnf": "George Russell",
                     "timestamp": "2024-04-09T15:16:38.007909+00:00"
+                },
+                "ABU DHABI": {
+                    "circuit": "ABU DHABI",
+                    "pten": "Alexander Albon",
+                    "dnf": "Alexander Albon",
+                    "timestamp": "2024-04-12T15:42:34.955831+00:00"
                 }
             },
             "choices_sprint": {},

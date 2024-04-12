@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from f1p10game.main import types as ty
+from f1p10game.mix import types as ty
 
 
 class CircuitApp:

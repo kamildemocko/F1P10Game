@@ -34,7 +34,6 @@ class CircuitFormStructure:
     table: CircuitFormWeekendTable
 
 
-# CircuitsFormStructure = dict[str, CircuitFormStructure]
 @dataclass
 class UiStructure:
     header: ui.html

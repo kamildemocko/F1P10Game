@@ -2,16 +2,22 @@ import random
 from itertools import cycle
 from typing import Callable
 import asyncio
+from dataclasses import dataclass
 
 from nicegui import ui
 
 from f1p10game.logic import helpers
 from f1p10game.uis import types as ui_types
-from f1p10game.main.players import PlayersApp
-from f1p10game.main import types as ty
+from f1p10game.mix.players import PlayersApp
+from f1p10game.mix import types as ty
 
 
 EMO_CYCLE = cycle(["🐶", "🐱", "🐭", "🐹", "🐰", "🐻", "🐼", "🐨", "🐯", "🐮", "🐷", "🐸", "🐵"])
+
+
+@dataclass
+class LoggedIn:
+    logged_in: bool = False
 
 
 class Actions:
@@ -53,6 +59,10 @@ class Actions:
                 print(exc)
                 buttons.timestamp.text = f"error:{str(exc)[:33]}"
                 return False
+
+        if not LoggedIn.logged_in:
+            ui.notify("Please log in first!")
+            return
 
         buttons.confirm.disable()
         pten_select.disable()

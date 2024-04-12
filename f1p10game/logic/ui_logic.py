@@ -7,10 +7,10 @@ from f1p10game.uis import types as ui_types
 from f1p10game.logic.actions import Actions
 from f1p10game.logic import helpers
 from f1p10game.results.results import ResultsApp
-from f1p10game.main.players import PlayersApp
+from f1p10game.mix.players import PlayersApp
 from f1p10game.results.types import Result
 from f1p10game.results import results_point_table as result_table
-from f1p10game.main import types as ty
+from f1p10game.mix import types as ty
 
 
 class UiLogic:
@@ -36,8 +36,8 @@ class UiLogic:
             results: list[Result],
     ) -> tuple[bool, ty.PointsTuple]:
         """
-        Fills main data of form for a player
-        :returns: True if main data was filled and points for pten and dnf
+        Fills mix data of form for a player
+        :returns: True if mix data was filled and points for pten and dnf
         """
         player_form: ui_types.CircuitFormPlayer = form[player_name]
         player_form.label.text = player_name
@@ -65,7 +65,7 @@ class UiLogic:
         player_form.buttons.confirm.disable()
 
         if len(results) == 0:
-            return True, ty.PointsTuple(0, 0)
+            return True, ty.PointsTuple((0, 0))
 
         # points
         player_points: ty.CalculatedPoints = self.calculate_points(results, player_choice_for_circuit)

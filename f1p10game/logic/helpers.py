@@ -4,7 +4,7 @@ from functools import partial
 import arrow
 
 from f1p10game.uis import types as ui_types
-from f1p10game.main import types as ty
+from f1p10game.mix import types as ty
 from f1p10game.results import types as res_types
 
 

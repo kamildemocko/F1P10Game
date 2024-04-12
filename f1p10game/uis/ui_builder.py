@@ -1,3 +1,5 @@
+from typing import Callable
+
 from nicegui import ui
 
 from f1p10game.uis import ui_helpers
@@ -9,8 +11,8 @@ from f1p10game.uis.types import (
     CircuitFormStructure,
     UiStructure,
 )
-from f1p10game.main import types as ty
-from f1p10game.main.players import PlayersApp
+from f1p10game.mix import types as ty
+from f1p10game.mix.players import PlayersApp
 from f1p10game.logic import actions
 
 
@@ -142,7 +144,7 @@ class UiBuilder:
 
         return CircuitFormStructure(race=form_players_race, sprint=form_players_sprint, table=form_table)
 
-    def build_ui(self, circuits: ty.Circuits, driver_options: dict[int, str]) -> UiStructure:
+    def build_ui(self, circuits: ty.Circuits, driver_options: dict[int, str], handle_login: Callable) -> UiStructure:
         """
         Builds all the circuits available one by one
         """
@@ -154,12 +156,11 @@ class UiBuilder:
                 one_circuit: CircuitFormStructure = self.build_circuit(circuit, driver_options)
                 all_circuits[circuit.title] = one_circuit
 
-        self.build_footer()
+        self.build_footer(handle_login)
 
         return UiStructure(header=header, circuits=all_circuits)
 
-    @staticmethod
-    def build_footer() -> None:
+    def build_footer(self, handle_login: Callable) -> None:
         """
         Builds footer of the app
         """
@@ -167,7 +168,12 @@ class UiBuilder:
             footer.style("background-color: crimson; color: white;")
             ui.label(text="2024 Kamil Democko")
             ui.link(text="GitHub", target="https://github.com/kamildemocko").classes("text-white")
+
             ui.space()
+
+            login_button = ui.button("Log in").classes("bg-black")
+            self.build_login(login_button, handle_login)
+
             dm = ui.dark_mode()
             ui.button("Light / Dark", on_click=lambda x=dm: ui_helpers.switch_dark_mode(x)).classes("bg-black")
 
@@ -193,3 +199,22 @@ class UiBuilder:
 
         return label
 
+    @staticmethod
+    def build_login(login_button: ui.button, login_handle: Callable) -> None:
+        """
+        Sets up UI for login handle
+        :returns: button that opens modal
+        """
+        with ui.dialog() as dialog, ui.card().classes("w-96"):
+
+            pwd_input = ui.input(
+                "Enter password: ", password=True, password_toggle_button=True
+            ).classes("w-full").props("autofocus")
+
+            with ui.row().classes("w-full"):
+                ui.button("Log in", on_click=lambda x=pwd_input: login_handle(x.value, dialog, login_button))
+                ui.space()
+                ui.button("Close", on_click=dialog.close)
+
+        pwd_input.on("keydown.enter", lambda x=pwd_input: login_handle(x.value, dialog, login_button))
+        login_button.on("click", dialog.open)

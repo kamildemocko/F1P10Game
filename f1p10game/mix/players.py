@@ -2,7 +2,7 @@ from pathlib import Path
 
 import arrow
 
-from f1p10game.main.types import PlayerChoice, Player, PlayersStruct
+from f1p10game.mix.types import PlayerChoice, Player, PlayersStruct
 
 
 class PlayersApp:
