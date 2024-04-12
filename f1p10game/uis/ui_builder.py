@@ -218,3 +218,5 @@ class UiBuilder:
 
         pwd_input.on("keydown.enter", lambda x=pwd_input: login_handle(x.value, dialog, login_button))
         login_button.on("click", dialog.open)
+
+        dialog.open()
