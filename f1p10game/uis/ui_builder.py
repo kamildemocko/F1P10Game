@@ -29,11 +29,11 @@ class UiBuilder:
         Ui for weekend table in one circuit
         :returns: Form of table - elements of table
         """
-        return ui.aggrid({
+
+        grid = ui.aggrid({
             "defaultColDef": {"flex": 1},
             "columnDefs": [
                 {"headerName": "Name", "field": "name"},
-                # {"headerName": "Month", "field": "month"},
                 {"headerName": "Day", "field": "day"},
                 {"headerName": "Time", "field": "time"},
             ],
@@ -42,6 +42,8 @@ class UiBuilder:
                 for s in circuit.weekend_structure[::-1]
             ]
         }).classes("max-h-48")
+
+        return CircuitFormWeekendTable(table=grid)
 
     @staticmethod
     def _build_form_buttons() -> CircuitFormButtons:
