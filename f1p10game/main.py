@@ -46,7 +46,6 @@ class Main:
         login_button.text = "Log in"
         ui.notify("Logged out", color="positive")
 
-    # @ui.page("/")
     def run(self):
         circuits: ty.Circuits = self.circuit_handle.data
 
