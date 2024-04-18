@@ -55,11 +55,13 @@ class Main:
             ui_elements,
             self.config.path_points_table
         )
-        self.logic_handle.update_ui_data()
 
-        ui.run(viewport="width=device-width, initial-scale=1", port=80)
+        self.logic_handle.update_ui_data()
+        
+        ui.run(viewport="width=device-width, initial-scale=1", host="localhost", port=8085, reload=False)
 
 
 if __name__ in {"__main__", "__mp_main__"}:
     main = Main()
     main.run()
+

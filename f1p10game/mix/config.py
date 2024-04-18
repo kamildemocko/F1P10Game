@@ -16,7 +16,7 @@ class Config:
 
 def get_config():
     config = configparser.ConfigParser()
-    config.read("config.ini")
+    config.read(Path("config.ini").resolve())
 
     return Config(
         title=config.get("root", "title"),
