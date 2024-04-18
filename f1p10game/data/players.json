@@ -26,6 +26,12 @@
                     "pten": "Lewis Hamilton",
                     "dnf": "Kevin Magnussen",
                     "timestamp": "2024-04-09T15:16:31.888776+00:00"
+                },
+                "SPAIN": {
+                    "circuit": "SPAIN",
+                    "pten": "Alexander Albon",
+                    "dnf": "Alexander Albon",
+                    "timestamp": "2024-04-18T13:38:49.659583+00:00"
                 }
             },
             "choices_sprint": {},

@@ -36,9 +36,17 @@ class Main:
 
         self.logged_in.logged_in = True
         login_button.disable()
+        login_button.text = "Logged in"
         dialog.close()
         ui.notify("Logged in", color="positive")
 
+    def handle_logout(self, login_button: ui.button):
+        self.logged_in.logged_in = False
+        login_button.enable()
+        login_button.text = "Log in"
+        ui.notify("Logged out", color="positive")
+
+    # @ui.page("/")
     def run(self):
         circuits: ty.Circuits = self.circuit_handle.data
 
@@ -46,7 +54,8 @@ class Main:
         ui_elements: ui_ty.UiStructure = ui_builder_handle.build_ui(
             circuits=circuits,
             driver_options=self.drivers_handle.get_driver_names_for_dropdown(),
-            handle_login=self.handle_login
+            handle_login=self.handle_login,
+            handle_logout=self.handle_logout,
         )
 
         self.logic_handle = UiLogic(
@@ -57,7 +66,7 @@ class Main:
         )
 
         self.logic_handle.update_ui_data()
-        
+
         ui.run(viewport="width=device-width, initial-scale=1", host="localhost", port=8085, reload=False)
 
 
