@@ -80,3 +80,9 @@ password=secret
 Pc
 
 ![image](https://github.com/kamildemocko/F1P10Game/assets/50048116/21f26d9b-91db-4431-aedf-d061c0cf2c17)
+
+![image](https://github.com/kamildemocko/F1P10Game/assets/50048116/c69f8c81-7070-428c-b68f-92bc6223156b)
+
+Phone
+
+![image](https://github.com/kamildemocko/F1P10Game/assets/50048116/b1424b37-90d2-4de4-81ce-289f91a48fc3)
