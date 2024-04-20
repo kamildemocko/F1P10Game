@@ -74,3 +74,9 @@ set up your password in .env file in folder f1p10game, the login
 ```text
 password=secret
 ```
+
+## Screenshots
+
+Pc
+
+![image](https://github.com/kamildemocko/F1P10Game/assets/50048116/21f26d9b-91db-4431-aedf-d061c0cf2c17)
