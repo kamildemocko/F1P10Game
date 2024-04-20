@@ -9,7 +9,7 @@ from f1p10game.logic.actions import Actions
 from f1p10game.logic import helpers
 from f1p10game.results.results import ResultsApp
 from f1p10game.mix.players import PlayersApp
-from f1p10game.results.types import Result
+from f1p10game.results.types import Result, ThisCircuitResults
 from f1p10game.results.results_point_table import PointsTable
 from f1p10game.mix import types as ty
 
@@ -37,6 +37,7 @@ class UiLogic:
             on_confirm: Callable,
             on_edit: Callable,
             results: list[Result],
+            event_type: str,
     ) -> tuple[bool, ty.PointsTuple]:
         """
         Fills mix data of form for a player
@@ -71,7 +72,11 @@ class UiLogic:
             return True, ty.PointsTuple((0, 0))
 
         # points
-        player_points: ty.CalculatedPoints = self.calculate_points(results, player_choice_for_circuit)
+        player_points: ty.CalculatedPoints = self.calculate_points(
+            results,
+            player_choice_for_circuit,
+            True if event_type == "sprint" else False
+        )
         player_form.result_label.text = helpers.prep_points_label(
             results,
             player_choice_for_circuit,
@@ -80,7 +85,9 @@ class UiLogic:
 
         return True, ty.PointsTuple((player_points.pten, player_points.dnf))
 
-    def calculate_points(self, results: list[Result], player_choices: ty.PlayerChoice) -> ty.CalculatedPoints:
+    def calculate_points(
+            self, results: list[Result], player_choices: ty.PlayerChoice, sprint: bool = False
+    ) -> ty.CalculatedPoints:
         """
         Calculates points from player choices
         :returns: dataclass of points for player
@@ -89,7 +96,8 @@ class UiLogic:
         dnf_result: Result = results[-1] if results[-1].time.lower() == "dnf" else None
 
         pten_points: int = self.points_table.get_points_for_position(
-            int(pten_result.position) if pten_result.position.isnumeric() else 0
+            int(pten_result.position) if pten_result.position.isnumeric() else 0,
+            sprint=sprint,
         )
         pten_pos: int = int(pten_result.position) if pten_result.position.isnumeric() else 0
         dnf_points = (20
@@ -110,7 +118,9 @@ class UiLogic:
         for player_name, player_data in players.data.items():
 
             for one_circuit_name, one_circuit_elements in self.ui_elements.circuits.items():
-                results_for_circuit: list[Result] | None = self.results_handle.get_result_for_circuit(one_circuit_name)
+                results_for_circuit: ThisCircuitResults | None = self.results_handle.get_result_for_circuit(
+                    one_circuit_name
+                )
 
                 # race form
                 race_form_filled, (pten_points, dnf_points) = self._fill_ui_form(
@@ -126,7 +136,8 @@ class UiLogic:
                         self.update_ui_data,
                     ),
                     on_edit=self.actions_handle.on_edit_button_clicked,
-                    results=results_for_circuit,
+                    results=results_for_circuit.race,
+                    event_type="race",
                 )
 
                 points[player_name] = points.get(player_name, 0) + pten_points + dnf_points
@@ -149,7 +160,8 @@ class UiLogic:
                         self.update_ui_data,
                     ),
                     on_edit=self.actions_handle.on_edit_button_clicked,
-                    results=results_for_circuit,
+                    results=results_for_circuit.sprint,
+                    event_type="sprint",
                 )
 
                 if not sprint_form_filled:
