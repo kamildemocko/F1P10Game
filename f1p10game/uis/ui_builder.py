@@ -174,14 +174,11 @@ class UiBuilder:
         """
         with ui.footer().classes("items-center") as footer:
             footer.style("background-color: crimson; color: white;")
-            ui.label(text="2024 Kamil Democko")
-            ui.link(text="GitHub", target="https://github.com/kamildemocko").classes("text-white")
-
-            ui.space()
-
             login_button = ui.button("Log in").classes("bg-black")
             self.build_login(login_button, handle_login)
             ui.timer(login_timeout, lambda: handle_logout(login_button))
+
+            ui.space()
 
             dm = ui.dark_mode()
             ui.button("Light / Dark", on_click=lambda x=dm: ui_helpers.switch_dark_mode(x)).classes("bg-black")
