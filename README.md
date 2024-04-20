@@ -41,19 +41,36 @@ poetry run playwright install chromium
 poetry run f1_scrap/main.py
 ```
 
+### Game
+
 ```commandline
 git clone https://github.com/kamildemocko/F1P10Game.git
 cd F1P10Game
 poetry install
 ```
 
-Set up config.ini paths to point to the scrapper json files
-Run with:
-```commandline
-poetry run f1p10game/main.py
+Set up config.ini paths to point to the scrapper json files and initial players
+```text
+[root]
+title = Formula 1 P-10 Game
+initial_players = Pete, Rachel
+login_timeout_sec = 300
+
+[paths]
+drivers_path = /home/ubuntu/F1Scrap/f1_scrap/output/drivers.json
+circuits_path = /home/ubuntu/F1Scrap/f1_scrap/output/circuits.json
+players_path = data/players.json
+results_path = /home/ubuntu/F1Scrap/f1_scrap/output/results.json
+points_path = data/points_tables.json
 ```
 
-set up your password in .env file in folder f1p10game:
+Run with:
+```commandline
+cd f1p10game
+poetry run main.py
+```
+
+set up your password in .env file in folder f1p10game, the login
 ```text
 password=secret
 ```
