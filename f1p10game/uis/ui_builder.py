@@ -151,6 +151,7 @@ class UiBuilder:
             driver_options: dict[int, str],
             handle_login: Callable,
             handle_logout: Callable,
+            login_timeout: float,
     ) -> UiStructure:
         """
         Builds all the circuits available one by one
@@ -163,11 +164,11 @@ class UiBuilder:
                 one_circuit: CircuitFormStructure = self.build_circuit(circuit, driver_options)
                 all_circuits[circuit.title] = one_circuit
 
-        self.build_footer(handle_login, handle_logout)
+        self.build_footer(handle_login, handle_logout, login_timeout)
 
         return UiStructure(header=header, circuits=all_circuits)
 
-    def build_footer(self, handle_login: Callable, handle_logout: Callable) -> None:
+    def build_footer(self, handle_login: Callable, handle_logout: Callable, login_timeout: float) -> None:
         """
         Builds footer of the app
         """
@@ -180,7 +181,7 @@ class UiBuilder:
 
             login_button = ui.button("Log in").classes("bg-black")
             self.build_login(login_button, handle_login)
-            ui.timer(300.0, lambda: handle_logout(login_button))
+            ui.timer(login_timeout, lambda: handle_logout(login_button))
 
             dm = ui.dark_mode()
             ui.button("Light / Dark", on_click=lambda x=dm: ui_helpers.switch_dark_mode(x)).classes("bg-black")
