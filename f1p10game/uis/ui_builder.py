@@ -130,13 +130,13 @@ class UiBuilder:
 
             with ui.row().classes("justify-center w-full"):
                 with ui.column():
-                    form_players_race: CircuitFormPlayers = self._build_player_form(
-                        "Race", driver_options
-                    )
-
                     form_players_sprint: CircuitFormPlayers | None = self._build_player_form(
                         "Sprint", driver_options
                     ) if sprint_weekend else None
+
+                    form_players_race: CircuitFormPlayers = self._build_player_form(
+                        "Race", driver_options
+                    )
 
                     ui.button(text="Close", on_click=exp.close)
                     form_table: CircuitFormWeekendTable = self._build_track_weekend_table(circuit)
