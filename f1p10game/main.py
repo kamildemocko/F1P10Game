@@ -55,7 +55,7 @@ class Main:
             driver_options=self.drivers_handle.get_driver_names_for_dropdown(),
             handle_login=self.handle_login,
             handle_logout=self.handle_logout,
-            login_timeout=self.config.login_timeout_sec
+            login_timeout=self.config.login_timeout_sec,
         )
 
         self.logic_handle = UiLogic(
@@ -66,6 +66,7 @@ class Main:
         )
 
         self.logic_handle.update_ui_data()
+        ui_elements.reload_button.on("click", self.logic_handle.update_ui_data)
 
         ui.run(viewport="width=device-width, initial-scale=1", host="localhost", port=8085, reload=False)
 

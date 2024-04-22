@@ -38,3 +38,4 @@ class CircuitFormStructure:
 class UiStructure:
     header: ui.html
     circuits: dict[str, CircuitFormStructure]
+    reload_button: ui.button

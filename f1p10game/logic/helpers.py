@@ -58,4 +58,4 @@ def prep_points_label(
     if points.dnf > 0:
         text_prep.append(f"{dnf_driver}: {points.dnf} pts for first DNF")
 
-    return ", ". join(text_prep)
+    return "\n". join(text_prep)

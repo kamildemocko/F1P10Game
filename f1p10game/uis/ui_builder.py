@@ -100,7 +100,7 @@ class UiBuilder:
                         form_buttons: CircuitFormButtons = self._build_form_buttons()
 
                     with ui.row():
-                        res_label = ui.label(text="").classes("text-sky-700 w-auto")
+                        res_label = ui.label(text="").classes("text-sky-700 w-auto").style('white-space: pre-wrap')
 
                     created_players[player_name] = CircuitFormPlayer(
                         label=label,
@@ -164,13 +164,14 @@ class UiBuilder:
                 one_circuit: CircuitFormStructure = self.build_circuit(circuit, driver_options)
                 all_circuits[circuit.title] = one_circuit
 
-        self.build_footer(handle_login, handle_logout, login_timeout)
+        reload_button: ui.button = self.build_footer(handle_login, handle_logout, login_timeout)
 
-        return UiStructure(header=header, circuits=all_circuits)
+        return UiStructure(header=header, circuits=all_circuits, reload_button=reload_button)
 
-    def build_footer(self, handle_login: Callable, handle_logout: Callable, login_timeout: float) -> None:
+    def build_footer(self, handle_login: Callable, handle_logout: Callable, login_timeout: float) -> ui.button:
         """
         Builds footer of the app
+        :returns: reload button Element
         """
         with ui.footer().classes("items-center") as footer:
             footer.style("background-color: crimson; color: white;")
@@ -178,10 +179,14 @@ class UiBuilder:
             self.build_login(login_button, handle_login)
             ui.timer(login_timeout, lambda: handle_logout(login_button))
 
+            button_reload = ui.button("Reload").classes("bg-black")
+
             ui.space()
 
             dm = ui.dark_mode()
             ui.button("Light / Dark", on_click=lambda x=dm: ui_helpers.switch_dark_mode(x)).classes("bg-black")
+
+            return button_reload
 
     @staticmethod
     def build_header(players: ty.PlayersStruct) -> ui.html:

@@ -172,6 +172,8 @@ class UiLogic:
 
         self.update_players_points(points)
 
+        ui.notify("Data loaded", color="positive")
+
     @staticmethod
     def get_players_picked_choices(
             pten_button: ui.select,
