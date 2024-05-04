@@ -68,7 +68,7 @@ class UiLogic:
         player_form.dnf.disable()
         player_form.buttons.confirm.disable()
 
-        if len(results) == 0:
+        if results is None or len(results) == 0:
             return True, ty.PointsTuple((0, 0))
 
         # points
