@@ -162,7 +162,7 @@ class UiBuilder:
         with ui.row():
             for circuit in circuits.all:
                 one_circuit: CircuitFormStructure = self.build_circuit(circuit, driver_options)
-                all_circuits[circuit.title] = one_circuit
+                all_circuits[circuit.circuit_name] = one_circuit
 
         reload_button: ui.button = self.build_footer(handle_login, handle_logout, login_timeout)
 
